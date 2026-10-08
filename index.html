@@ -25,11 +25,15 @@
       box-shadow: 4px 4px 0 0 #000;
       transition: transform 0.1s;
     }
+    .pixel-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 #000;
+    }
     .pixel-btn:active {
       transform: translate(2px, 2px);
       box-shadow: 2px 2px 0 0 #000;
     }
-    /* CRT Scanline Overlay */
+    /* CRT Scanline Overlay Effect */
     .scanlines {
       background: linear-gradient(
         rgba(18, 16, 16, 0) 50%, 
@@ -37,206 +41,307 @@
       );
       background-size: 100% 4px;
     }
+    .blink {
+      animation: blinker 1s step-start infinite;
+    }
+    @keyframes blinker {
+      50% { opacity: 0; }
+    }
   </style>
 </head>
-<body class="min-h-screen p-2 sm:p-4 md:p-6 scanlines">
+<body class="min-h-screen pb-10 scanlines select-none">
 
-  <!-- MAIN NAVIGATION BAR -->
-  <nav class="max-w-7xl mx-auto mb-6 pixel-box bg-[#d89654] p-3 flex flex-wrap justify-between items-center gap-2">
-    <div class="flex items-center gap-2">
-      <span class="text-xl">🎮</span>
-      <span class="pixel-font text-sm font-bold text-black uppercase">ADRIANE</span>
+  <!-- RETRO ARCADE TOP HUD BAR -->
+  <header class="bg-black text-[#00f0f0] border-b-4 border-black px-4 py-1.5 pixel-font text-[10px] sm:text-xs flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center gap-2 sm:gap-4">
+      <span>1UP <span class="text-[#f8d878]">099990</span></span>
+      <span class="hidden sm:inline text-gray-500">|</span>
+      <span>HIGH <span class="text-[#f8d878]">999990</span></span>
     </div>
-    <div class="flex gap-2 sm:gap-4 text-xs pixel-font flex-wrap">
-      <a href="#hero" class="hover:text-[#e60012]">Start</a>
-      <a href="#stats" class="hover:text-[#e60012]">Stats</a>
-      <a href="#created-game" class="hover:text-[#e60012]">My Game</a>
-      <a href="#favorites" class="hover:text-[#e60012]">Favorites</a>
-      <a href="#socials" class="hover:text-[#e60012]">Socials</a>
+    <div class="hidden md:block text-white blink text-center">
+      ★ PRESS START / INSERT COIN ★
     </div>
-  </nav>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <span>STAGE <span class="text-[#e60012]">1-1</span></span>
+      <span class="hidden sm:inline text-gray-500">|</span>
+      <span>LIVES <span class="text-[#e60012]">❤️❤️❤️</span></span>
+    </div>
+  </header>
 
-  <!-- 2x2 TILED MAIN LAYOUT FOR PC (STACKS ON MOBILE) -->
-  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="max-w-7xl mx-auto p-2 sm:p-4 md:p-6 space-y-6">
 
-    <!-- TILE 1: UPPER LEFT - HERO & NES JASON -->
-    <section id="hero" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
-      <div>
-        <div class="inline-block bg-[#000] text-[#00f0f0] border-2 border-black px-2 py-1 mb-4">
-          <span class="pixel-font text-xs">COUNSELOR READY</span>
-        </div>
-        <h1 class="pixel-font text-lg sm:text-2xl text-black mb-4 leading-snug">
-          GREETINGS FROM CAMP CRYSTAL LAKE!<br>
-          I'M ADRIANE.
-        </h1>
-        <div class="bg-[#f8d878] border-4 border-black p-4 mb-6 shadow-[4px_4px_0_0_#000]">
-          <p class="text-lg font-bold">
-            Indie PSP Game Developer &amp; Retro Horror Enthusiast.
-          </p>
-        </div>
+    <!-- MAIN NAVIGATION BAR -->
+    <nav class="pixel-box bg-[#d89654] p-3 flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🎮</span>
+        <span class="pixel-font text-sm font-bold text-black uppercase tracking-wider">ADRIANE</span>
       </div>
-
-      <!-- NES JASON ANIMATED GIF DISPLAY -->
-      <div class="my-4 text-center">
-        <div class="relative inline-block bg-black border-4 border-black p-1 shadow-[4px_4px_0_0_#000] max-w-[280px]">
-          <img 
-            src="f13.gif" 
-            alt="Friday the 13th NES Jason" 
-            class="w-full h-auto block object-cover"
-            style="image-rendering: pixelated;"
-          >
-        </div>
+      <div class="flex gap-2 sm:gap-4 text-xs pixel-font flex-wrap">
+        <a href="#hero" class="hover:text-[#e60012] hover:underline">Start</a>
+        <a href="#stats" class="hover:text-[#e60012] hover:underline">Stats</a>
+        <a href="#created-games" class="hover:text-[#e60012] hover:underline">My Games</a>
+        <a href="#favorites" class="hover:text-[#e60012] hover:underline">Favorites</a>
+        <a href="#socials" class="hover:text-[#e60012] hover:underline">Socials</a>
       </div>
+    </nav>
 
-      <a href="#created-game" class="pixel-btn block w-full py-3 bg-[#e60012] text-white text-center pixel-font text-xs uppercase mt-2">
-        🎮 VIEW CREATED GAME
-      </a>
-    </section>
+    <!-- TOP ROW: HERO (LEFT) & PLAYER STATS (RIGHT) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-    <!-- TILE 2: UPPER RIGHT - PLAYER STATS & INVENTORY -->
-    <section id="stats" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
-      <div>
-        <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2">
-          <span>⭐</span> PLAYER STATS
-        </h2>
-        <div class="bg-[#f8f8f8] border-4 border-black p-4 mb-6 text-lg">
-          <p class="mb-3">
-            Hello! I'm Adriane, an independent game developer creating games for the PSP. I love exploring game creation and bringing new retro ideas to life.
-          </p>
-          <p>
-            Big retro gaming &amp; horror movie fan (Friday the 13th, Halloween, Chucky, Scream). Conquered classics like Friday the 13th (NES), Super Mario (NES), and Naruto Ultimate Ninja Impact (PSP)!
-          </p>
-        </div>
-
-        <!-- BADGES INVENTORY -->
+      <!-- TILE 1: UPPER LEFT - HERO & NES JASON -->
+      <section id="hero" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
         <div>
-          <span class="pixel-font text-xs uppercase block mb-2 text-[#000]">INVENTORY</span>
-          <div class="grid grid-cols-2 gap-3 text-sm font-bold">
-            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
-              <span>&lt;/&gt;</span> PSP Dev
+          <div class="flex justify-between items-center mb-4">
+            <div class="inline-block bg-[#000] text-[#00f0f0] border-2 border-black px-2 py-1">
+              <span class="pixel-font text-[10px]">COUNSELOR READY</span>
             </div>
-            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
-              <span>👻</span> Horror Fan
-            </div>
-            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
-              <span>🕹️</span> Retro Gamer
-            </div>
-            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
-              <span>🧩</span> Explorer
+            <span class="pixel-font text-[10px] text-black">WORLD 1</span>
+          </div>
+          <h1 class="pixel-font text-lg sm:text-2xl text-black mb-4 leading-snug">
+            GREETINGS FROM CAMP CRYSTAL LAKE!<br>
+            I'M ADRIANE.
+          </h1>
+          <div class="bg-[#f8d878] border-4 border-black p-4 mb-4 shadow-[4px_4px_0_0_#000]">
+            <p class="text-lg font-bold">
+              Indie PSP Game Developer &amp; Retro Horror Enthusiast.
+            </p>
+          </div>
+        </div>
+
+        <!-- NES JASON ANIMATED GIF DISPLAY -->
+        <div class="my-2 text-center">
+          <div class="relative inline-block bg-black border-4 border-black p-1 shadow-[4px_4px_0_0_#000] max-w-[280px]">
+            <img 
+              src="f13.gif" 
+              alt="Friday the 13th NES Jason" 
+              class="w-full h-auto block object-cover"
+              style="image-rendering: pixelated;"
+            >
+          </div>
+        </div>
+
+        <a href="#created-games" class="pixel-btn block w-full py-3 bg-[#e60012] text-white text-center pixel-font text-xs uppercase mt-2">
+          🎮 VIEW CREATED GAMES
+        </a>
+      </section>
+
+      <!-- TILE 2: UPPER RIGHT - PLAYER STATS & INVENTORY -->
+      <section id="stats" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
+        <div>
+          <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2 border-b-4 border-black pb-2">
+            <span>⭐</span> PLAYER STATS
+          </h2>
+          <div class="bg-[#f8f8f8] border-4 border-black p-4 mb-6 text-lg shadow-[4px_4px_0_0_#000]">
+            <p class="mb-3">
+              Hello! I'm Adriane, an independent game developer creating games for the PSP. I love exploring game creation and bringing new retro ideas to life.
+            </p>
+            <p>
+              Big retro gaming &amp; horror movie fan (Friday the 13th, Halloween, Chucky, Scream). Conquered classics like Friday the 13th (NES), Super Mario (NES), and Naruto Ultimate Ninja Impact (PSP)!
+            </p>
+          </div>
+
+          <!-- BADGES INVENTORY -->
+          <div>
+            <span class="pixel-font text-xs uppercase block mb-2 text-[#000]">INVENTORY / PASSIVES</span>
+            <div class="grid grid-cols-2 gap-3 text-sm font-bold">
+              <div class="bg-[#282828] text-white p-2.5 border-2 border-black flex items-center gap-2 shadow-[2px_2px_0_0_#000]">
+                <span>&lt;/&gt;</span> PSP Dev
+              </div>
+              <div class="bg-[#282828] text-white p-2.5 border-2 border-black flex items-center gap-2 shadow-[2px_2px_0_0_#000]">
+                <span>👻</span> Horror Fan
+              </div>
+              <div class="bg-[#282828] text-white p-2.5 border-2 border-black flex items-center gap-2 shadow-[2px_2px_0_0_#000]">
+                <span>🕹️</span> Retro Gamer
+              </div>
+              <div class="bg-[#282828] text-white p-2.5 border-2 border-black flex items-center gap-2 shadow-[2px_2px_0_0_#000]">
+                <span>🧩</span> Explorer
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- TILE 3: LOWER LEFT - CREATED GAME (ANOMALY: PORTABLE) -->
-    <section id="created-game" class="pixel-box p-6 bg-[#d89654]">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="pixel-font text-lg text-black flex items-center gap-2">
-          <span>🚀</span> MY CREATED GAME
+    </div>
+
+    <!-- MIDDLE ROW: MY CREATED GAMES (FULL-WIDTH RECTANGULAR TILE) -->
+    <section id="created-games" class="pixel-box p-6 bg-[#d89654]">
+      <div class="flex flex-wrap justify-between items-center mb-6 border-b-4 border-black pb-3 gap-2">
+        <h2 class="pixel-font text-lg sm:text-xl text-black flex items-center gap-2">
+          <span>🚀</span> MY CREATED GAMES
         </h2>
-        <span class="bg-[#e60012] text-white text-[10px] pixel-font px-2 py-1 border-2 border-black">PSP PROJECT</span>
+        <div class="flex items-center gap-2">
+          <span class="bg-[#e60012] text-white text-[10px] pixel-font px-3 py-1 border-2 border-black uppercase blink">
+            DEVELOPER BAY
+          </span>
+        </div>
       </div>
 
-      <!-- ANOMALY: PORTABLE SHOWCASE IMAGE -->
-      <div class="w-full bg-black border-4 border-black mb-4 overflow-hidden">
-        <img 
-          src="anomaly.png" 
-          alt="Anomaly: Portable Gameplay" 
-          class="w-full h-auto object-cover block"
-          style="image-rendering: pixelated;"
-        >
-      </div>
+      <!-- GRID CONTAINER FOR GAMES (Add future games cleanly here!) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <h3 class="pixel-font text-base text-black mb-2">Anomaly: Portable</h3>
-      <p class="text-lg bg-[#f8f8f8] border-4 border-black p-3 mb-3">
-        A horror alien space shooter similar to <em>Dead Space</em> on Xbox 360, built natively for the PlayStation Portable (PSP).
-      </p>
-      <div class="flex flex-wrap gap-2 text-xs font-bold">
-        <span class="bg-[#000] text-white px-2 py-1 border-2 border-black">PSP Native</span>
-        <span class="bg-[#000] text-[#00f0f0] px-2 py-1 border-2 border-black">Horror</span>
-        <span class="bg-[#000] text-[#f8d878] px-2 py-1 border-2 border-black">Sci-Fi Shooter</span>
+        <!-- GAME 1: ANOMALY: PORTABLE -->
+        <div class="bg-[#f8d878] border-4 border-black p-4 flex flex-col justify-between shadow-[4px_4px_0_0_#000]">
+          <div>
+            <!-- GAME SHOWCASE IMAGE -->
+            <div class="w-full bg-black border-4 border-black mb-4 overflow-hidden relative">
+              <img 
+                src="anomaly.png" 
+                alt="Anomaly: Portable Gameplay" 
+                class="w-full h-auto object-cover block"
+                style="image-rendering: pixelated;"
+              >
+              <div class="absolute top-2 right-2 bg-[#e60012] text-white text-[10px] pixel-font px-2 py-0.5 border-2 border-black">
+                PSP PROJECT
+              </div>
+            </div>
+
+            <h3 class="pixel-font text-base text-black mb-2">Anomaly: Portable</h3>
+            <p class="text-base sm:text-lg bg-[#f8f8f8] border-4 border-black p-3 mb-4">
+              A horror alien space shooter similar to <em>Dead Space</em> on Xbox 360, built natively for the PlayStation Portable (PSP).
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs font-bold mb-4">
+              <span class="bg-[#000] text-white px-2 py-1 border-2 border-black">PSP Native</span>
+              <span class="bg-[#000] text-[#00f0f0] px-2 py-1 border-2 border-black">Horror</span>
+              <span class="bg-[#000] text-[#f8d878] px-2 py-1 border-2 border-black">Sci-Fi Shooter</span>
+            </div>
+          </div>
+
+          <!-- COMING SOON / DOWNLOAD TILE -->
+          <div class="pt-2 border-t-2 border-black">
+            <!-- 
+              TO ADD A DOWNLOAD LINK LATER WHEN PUBLISHED:
+              Replace the div below with:
+              <a href="YOUR_DOWNLOAD_LINK_HERE" target="_blank" class="pixel-btn block w-full bg-[#00f0f0] text-black text-center py-3 pixel-font text-xs uppercase font-bold">
+                📥 DOWNLOAD ISO
+              </a>
+            -->
+            <div class="bg-[#282828] text-[#f8d878] border-4 border-black p-3 text-center pixel-font text-xs uppercase shadow-[2px_2px_0_0_#000] flex items-center justify-center gap-2">
+              <span class="animate-spin text-base">⏳</span>
+              <span>COMING SOON (ISO DOWNLOAD)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 
+          FUTURE GAME TEMPLATE:
+          When you create another game, simply uncomment and edit the block below!
+        -->
+        <!--
+        <div class="bg-[#f8d878] border-4 border-black p-4 flex flex-col justify-between shadow-[4px_4px_0_0_#000]">
+          <div>
+            <div class="w-full bg-black border-4 border-black mb-4 overflow-hidden relative">
+              <img src="your-new-game.png" alt="New Game Title" class="w-full h-auto object-cover block" style="image-rendering: pixelated;">
+            </div>
+            <h3 class="pixel-font text-base text-black mb-2">Game Title</h3>
+            <p class="text-base sm:text-lg bg-[#f8f8f8] border-4 border-black p-3 mb-4">
+              Game description goes here...
+            </p>
+            <div class="flex flex-wrap gap-2 text-xs font-bold mb-4">
+              <span class="bg-[#000] text-white px-2 py-1 border-2 border-black">Genre</span>
+            </div>
+          </div>
+          <div class="pt-2 border-t-2 border-black">
+            <a href="#" class="pixel-btn block w-full bg-[#00f0f0] text-black text-center py-3 pixel-font text-xs uppercase">📥 DOWNLOAD</a>
+          </div>
+        </div>
+        -->
+
       </div>
     </section>
 
-    <!-- TILE 4: LOWER RIGHT - FAVORITE GAMES -->
-    <section id="favorites" class="pixel-box p-6 bg-[#d89654]">
-      <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2">
-        <span>👾</span> GAMES I LOVE
-      </h2>
+    <!-- BOTTOM ROW: GAMES I LOVE (LEFT) & WARP ZONE (RIGHT) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- SILENT HILL ORIGINS IMAGE -->
-        <div class="bg-[#f8f8f8] border-4 border-black p-2">
-          <div class="w-full h-28 bg-black border-2 border-black overflow-hidden mb-2">
-            <img src="sh-origin.jpg" alt="Silent Hill Origins PSP" class="w-full h-full object-cover block">
+      <!-- LEFT TILE: GAMES I LOVE -->
+      <section id="favorites" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
+        <div>
+          <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2 border-b-4 border-black pb-2">
+            <span>👾</span> GAMES I LOVE
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- SILENT HILL ORIGINS IMAGE -->
+            <div class="bg-[#f8f8f8] border-4 border-black p-2 shadow-[2px_2px_0_0_#000]">
+              <div class="w-full h-28 bg-black border-2 border-black overflow-hidden mb-2">
+                <img src="sh-origin.jpg" alt="Silent Hill Origins PSP" class="w-full h-full object-cover block">
+              </div>
+              <h4 class="pixel-font text-xs text-black mb-1">Silent Hill Origins</h4>
+              <p class="text-xs">Favorite PSP survival horror game.</p>
+            </div>
+
+            <!-- FRIDAY THE 13TH NES -->
+            <div class="bg-[#f8f8f8] border-4 border-black p-2 shadow-[2px_2px_0_0_#000]">
+              <div class="w-full h-28 bg-[#008000] border-2 border-black flex items-center justify-center mb-2">
+                <span class="text-3xl">💀</span>
+              </div>
+              <h4 class="pixel-font text-xs text-black mb-1">Friday the 13th</h4>
+              <p class="text-xs">Classic NES Crystal Lake survival.</p>
+            </div>
+
+            <!-- NARUTO ULTIMATE NINJA IMPACT -->
+            <div class="bg-[#f8f8f8] border-4 border-black p-2 shadow-[2px_2px_0_0_#000]">
+              <div class="w-full h-28 bg-[#e60012] border-2 border-black flex items-center justify-center mb-2">
+                <span class="text-3xl">🍥</span>
+              </div>
+              <h4 class="pixel-font text-xs text-black mb-1">Naruto Impact</h4>
+              <p class="text-xs">Favorite PSP action title.</p>
+            </div>
+
+            <!-- SUPER MARIO BROS NES -->
+            <div class="bg-[#f8f8f8] border-4 border-black p-2 shadow-[2px_2px_0_0_#000]">
+              <div class="w-full h-28 bg-[#5c94fc] border-2 border-black flex items-center justify-center mb-2">
+                <span class="text-3xl">🍄</span>
+              </div>
+              <h4 class="pixel-font text-xs text-black mb-1">Super Mario Bros</h4>
+              <p class="text-xs">Completed NES classic.</p>
+            </div>
           </div>
-          <h4 class="pixel-font text-xs text-black mb-1">Silent Hill Origins</h4>
-          <p class="text-xs">Favorite PSP survival horror game.</p>
+        </div>
+      </section>
+
+      <!-- RIGHT TILE: WARP ZONE & CONTACT -->
+      <section id="socials" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
+        <div>
+          <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2 border-b-4 border-black pb-2">
+            <span>🌐</span> WARP ZONE &amp; CONTACT
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- YOUTUBE -->
+            <a href="https://www.youtube.com/@TheCoalNoob" target="_blank" class="pixel-btn bg-[#e60012] text-white p-4 text-center block">
+              <div class="text-2xl mb-1">▶️</div>
+              <span class="pixel-font text-xs uppercase">YouTube</span>
+            </a>
+
+            <!-- REDDIT -->
+            <a href="https://www.reddit.com/user/According-Rain4858" target="_blank" class="pixel-btn bg-[#ff4500] text-white p-4 text-center block">
+              <div class="text-2xl mb-1">🤖</div>
+              <span class="pixel-font text-xs uppercase">Reddit</span>
+            </a>
+
+            <!-- EMAIL -->
+            <a href="mailto:your-email@example.com" class="pixel-btn bg-[#00f0f0] text-black p-4 text-center block">
+              <div class="text-2xl mb-1">✉️</div>
+              <span class="pixel-font text-xs uppercase">Email</span>
+            </a>
+
+            <!-- DONATE / PAYPAL -->
+            <a href="https://paypal.me" target="_blank" class="pixel-btn bg-[#f8d878] text-black p-4 text-center block">
+              <div class="text-2xl mb-1">🪙</div>
+              <span class="pixel-font text-xs uppercase">Donate</span>
+            </a>
+          </div>
         </div>
 
-        <!-- FRIDAY THE 13TH NES -->
-        <div class="bg-[#f8f8f8] border-4 border-black p-2">
-          <div class="w-full h-28 bg-[#008000] border-2 border-black flex items-center justify-center mb-2">
-            <span class="text-3xl">💀</span>
-          </div>
-          <h4 class="pixel-font text-xs text-black mb-1">Friday the 13th</h4>
-          <p class="text-xs">Classic NES Crystal Lake survival.</p>
+        <div class="mt-6 bg-[#f8f8f8] border-4 border-black p-3 text-center">
+          <p class="pixel-font text-[10px] uppercase">STATUS: AVAILABLE FOR PSP DEV &amp; COLLABS</p>
         </div>
+      </section>
 
-        <!-- NARUTO ULTIMATE NINJA IMPACT -->
-        <div class="bg-[#f8f8f8] border-4 border-black p-2">
-          <div class="w-full h-28 bg-[#e60012] border-2 border-black flex items-center justify-center mb-2">
-            <span class="text-3xl">🍥</span>
-          </div>
-          <h4 class="pixel-font text-xs text-black mb-1">Naruto Impact</h4>
-          <p class="text-xs">Favorite PSP action title.</p>
-        </div>
+    </div>
 
-        <!-- SUPER MARIO BROS NES -->
-        <div class="bg-[#f8f8f8] border-4 border-black p-2">
-          <div class="w-full h-28 bg-[#5c94fc] border-2 border-black flex items-center justify-center mb-2">
-            <span class="text-3xl">🍄</span>
-          </div>
-          <h4 class="pixel-font text-xs text-black mb-1">Super Mario Bros</h4>
-          <p class="text-xs">Completed NES classic.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FULL WIDTH BOTTOM TILE: WARP ZONE & SOCIAL MEDIA -->
-    <section id="socials" class="lg:col-span-2 pixel-box p-6 bg-[#d89654]">
-      <h2 class="pixel-font text-lg text-black mb-4 text-center">
-        <span>🌐</span> WARP ZONE &amp; CONTACT
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- YOUTUBE -->
-        <a href="https://www.youtube.com/@TheCoalNoob" target="_blank" class="pixel-btn bg-[#e60012] text-white p-3 text-center block">
-          <div class="text-xl mb-1">▶️</div>
-          <span class="pixel-font text-xs uppercase">YouTube</span>
-        </a>
-
-        <!-- REDDIT -->
-        <a href="https://www.reddit.com/user/According-Rain4858" target="_blank" class="pixel-btn bg-[#ff4500] text-white p-3 text-center block">
-          <div class="text-xl mb-1">🤖</div>
-          <span class="pixel-font text-xs uppercase">Reddit</span>
-        </a>
-
-        <!-- EMAIL -->
-        <a href="mailto:your-email@example.com" class="pixel-btn bg-[#00f0f0] text-black p-3 text-center block">
-          <div class="text-xl mb-1">✉️</div>
-          <span class="pixel-font text-xs uppercase">Email</span>
-        </a>
-
-        <!-- PAYPAL -->
-        <a href="https://paypal.me" target="_blank" class="pixel-btn bg-[#f8d878] text-black p-3 text-center block">
-          <div class="text-xl mb-1">🪙</div>
-          <span class="pixel-font text-xs uppercase">Donate</span>
-        </a>
-      </div>
-    </section>
-
-  </main>
+  </div>
 
   <footer class="max-w-7xl mx-auto mt-6 text-center text-xs pixel-font text-black py-4">
     © GAME OVER — ALL RIGHTS RESERVED
