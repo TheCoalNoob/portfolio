@@ -1,643 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adriane | PSP Indie Developer</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        pixel: {
-                            bg: '#5C94FC',        /* Keep Sky Blue Background for light theme / daytime camp */
-                            primary: '#9C2A9C',   /* NES Jason Purple */
-                            secondary: '#00E8D8', /* NES Jason Cyan */
-                            accent: '#E52521',    /* Blood Red / Accent */
-                            panel: '#8B4513',     /* Cabin Wood Brown Dark */
-                            panelLight: '#D2B48C' /* Cabin Wood Brown Light */
-                        }
-                    },
-                    fontFamily: {
-                        'pixel': ['"Press Start 2P"', 'cursive'],
-                        'terminal': ['"VT323"', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adriane | PSP Indie Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #5C94FC;
-            color: #FFFFFF;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* Pixelated Wood Borders for Containers */
-        .pixel-border {
-            border: 4px solid #000000;
-            background-color: #8B4513; /* Wood color */
-            position: relative;
-            box-shadow: 
-                inset -4px -4px 0px 0px rgba(0,0,0,0.5), 
-                inset 4px 4px 0px 0px #A0522D;
-        }
-        
-        /* Cabin Block Style for special areas */
-        .q-block {
-            background-color: #D2B48C;
-            border: 4px solid #000;
-            box-shadow: 
-                inset -4px -4px 0px 0px #8B4513, 
-                inset 4px 4px 0px 0px #F5DEB3;
-            color: #000;
-        }
-
-        /* Chunky Pixel Buttons */
-        .pixel-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            background-color: #E52521;
-            color: #FFFFFF;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: 4px solid #000;
-            box-shadow: inset -4px -4px 0px 0px rgba(0,0,0,0.3), inset 4px 4px 0px 0px #FF8888, 4px 4px 0px 0px #000000;
-            transition: all 0.1s;
-            cursor: pointer;
-        }
-
-        .pixel-btn:active {
-            box-shadow: inset 4px 4px 0px 0px rgba(0,0,0,0.3), 0px 0px 0px 0px #000000;
-            transform: translate(4px, 4px);
-        }
-        
-        .pixel-btn-youtube { 
-            background-color: #FF0000; 
-            box-shadow: inset -4px -4px 0px 0px rgba(0,0,0,0.3), inset 4px 4px 0px 0px #FF8888, 4px 4px 0px 0px #000000;
-        }
-        
-        .pixel-btn-reddit { 
-            background-color: #FF4500; 
-            box-shadow: inset -4px -4px 0px 0px rgba(0,0,0,0.3), inset 4px 4px 0px 0px #FFA07A, 4px 4px 0px 0px #000000;
-        }
-
-        .pixel-btn-email { 
-            background-color: #43B047; /* Pipe Green */
-            box-shadow: inset -4px -4px 0px 0px rgba(0,0,0,0.3), inset 4px 4px 0px 0px #88FF88, 4px 4px 0px 0px #000000;
-        }
-
-        /* Blinking Cursor Animation */
-        .cursor {
-            display: inline-block;
-            width: 12px;
-            height: 24px;
-            background-color: #FBD000;
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 5px;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Pure CSS Pixel Art Avatar (NES Jason Sprite) */
-        .pixel-avatar {
-            width: 1em;
-            height: 1em;
-            font-size: 10px; /* Base scale for mobile */
-            background: transparent;
-            /* Using shadow to draw the exact sprite from reference */
-            box-shadow: 
-                /* Head */
-                4em 0 #00E8D8, 5em 0 #00E8D8, 6em 0 #00E8D8, 7em 0 #00E8D8,
-                3em 1em #00E8D8, 4em 1em #00E8D8, 5em 1em #00E8D8, 6em 1em #00E8D8, 7em 1em #00E8D8, 8em 1em #00E8D8,
-                3em 2em #00E8D8, 4em 2em #181828, 5em 2em #00E8D8, 6em 2em #181828, 7em 2em #00E8D8, 8em 2em #00E8D8,
-                3em 3em #00E8D8, 4em 3em #00E8D8, 5em 3em #00E8D8, 6em 3em #00E8D8, 7em 3em #00E8D8, 8em 3em #00E8D8,
-                4em 4em #00E8D8, 5em 4em #181828, 6em 4em #181828, 7em 4em #00E8D8,
-                /* Blade & Shoulders/Torso */
-                1em 5em #B8B8B8, 4em 5em #9C2A9C, 5em 5em #9C2A9C, 6em 5em #9C2A9C, 7em 5em #9C2A9C,
-                1em 6em #B8B8B8, 3em 6em #9C2A9C, 4em 6em #9C2A9C, 5em 6em #9C2A9C, 6em 6em #9C2A9C, 7em 6em #9C2A9C, 8em 6em #9C2A9C,
-                1em 7em #B8B8B8, 3em 7em #9C2A9C, 4em 7em #9C2A9C, 5em 7em #9C2A9C, 6em 7em #9C2A9C, 7em 7em #9C2A9C, 9em 7em #9C2A9C,
-                /* Handle, Hands, Torso */
-                2em 8em #8B4513, 3em 8em #00E8D8, 4em 8em #9C2A9C, 5em 8em #9C2A9C, 6em 8em #9C2A9C, 7em 8em #9C2A9C, 8em 8em #9C2A9C, 9em 8em #00E8D8,
-                /* Lower Torso */
-                4em 9em #9C2A9C, 5em 9em #9C2A9C, 6em 9em #9C2A9C, 7em 9em #9C2A9C,
-                /* Legs */
-                3em 10em #9C2A9C, 4em 10em #9C2A9C, 7em 10em #9C2A9C, 8em 10em #9C2A9C,
-                3em 11em #9C2A9C, 4em 11em #9C2A9C, 7em 11em #9C2A9C, 8em 11em #9C2A9C,
-                /* Feet */
-                2em 12em #181828, 3em 12em #181828, 4em 12em #181828, 7em 12em #181828, 8em 12em #181828, 9em 12em #181828;
-            margin-bottom: 150px;
-            margin-right: 130px;
-        }
-
-        @media (min-width: 768px) {
-            .pixel-avatar {
-                font-size: 18px; /* Scale up for desktop */
-                margin-bottom: 240px;
-                margin-right: 200px;
-            }
-        }
-
-        /* Floating Animation for Avatar */
-        .jump-anim {
-            animation: jump 2s ease-in-out infinite;
-        }
-
-        @keyframes jump {
-            0% { transform: translateY(0px); }
-            10% { transform: translateY(5px); } /* Squash */
-            40% { transform: translateY(-40px); } /* Jump */
-        ::-webkit-scrollbar-track { background: #1C331E; border-left: 2px solid #000; }
-        ::-webkit-scrollbar-thumb { background: #9C2A9C; border: 2px solid #000; }
-        ::-webkit-scrollbar-thumb:hover { background: #00E8D8; }
-    </style>
+  <style>
+    body {
+      font-family: 'VT323', monospace;
+      background-color: #5c94fc;
+      color: #000;
+      image-rendering: pixelated;
+    }
+    .pixel-font { font-family: 'Press Start 2P', cursive; }
+    .pixel-box {
+      border: 4px solid #000;
+      background-color: #d89654;
+      box-shadow: 6px 6px 0px #000;
+    }
+    .pixel-btn {
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 0 #000;
+      transition: transform 0.1s;
+    }
+    .pixel-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 0 #000;
+    }
+    /* CRT Scanline Overlay */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
+      );
+      background-size: 100% 4px;
+    }
+  </style>
 </head>
-<body class="font-terminal text-lg md:text-2xl antialiased selection:bg-pixel-secondary selection:text-black overflow-hidden">
+<body class="min-h-screen p-2 sm:p-4 md:p-6 scanlines">
 
-    <!-- Welcome Modal -->
-    <div id="welcome-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4 transition-opacity duration-300">
-        <div class="pixel-border p-6 md:p-10 w-full max-w-lg bg-pixel-panel text-center shadow-[8px_8px_0_#00E8D8]">
-            <h2 class="font-pixel text-xl md:text-2xl text-white drop-shadow-[4px_4px_0_#000] mb-6 leading-relaxed">
-                WELCOME TO<br><span class="text-pixel-secondary">CAMP CRYSTAL LAKE</span>
-            </h2>
-            <p class="font-terminal text-2xl text-white mb-6">What is your name, counselor?</p>
-            
-            <input type="text" id="visitor-name" class="w-full bg-black/50 border-4 border-black text-white font-terminal text-2xl p-3 mb-2 outline-none focus:border-pixel-secondary placeholder-white/30" placeholder="Enter name..." autocomplete="off">
-            <p id="name-error" class="font-terminal text-pixel-primary text-xl mb-6 font-bold hidden bg-black inline-block px-2">Name cannot be blank!</p>
-            
-            <button id="submit-name" class="pixel-btn w-full mt-4 text-xl py-4 hover:text-pixel-secondary hover:bg-black">ENTER CAMP</button>
-        </div>
+  <!-- MAIN NAVIGATION BAR -->
+  <nav class="max-w-7xl mx-auto mb-6 pixel-box bg-[#d89654] p-3 flex flex-wrap justify-between items-center gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">🎮</span>
+      <span class="pixel-font text-sm font-bold text-black uppercase">ADRIANE</span>
     </div>
+    <div class="flex gap-2 sm:gap-4 text-xs pixel-font flex-wrap">
+      <a href="#hero" class="hover:text-[#e60012]">Start</a>
+      <a href="#stats" class="hover:text-[#e60012]">Stats</a>
+      <a href="#created-game" class="hover:text-[#e60012]">My Game</a>
+      <a href="#favorites" class="hover:text-[#e60012]">Favorites</a>
+      <a href="#socials" class="hover:text-[#e60012]">Socials</a>
+    </div>
+  </nav>
 
-    <nav class="fixed w-full top-0 z-40 bg-pixel-panel border-b-4 border-black border-double border-b-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <a href="#" class="font-pixel text-xs md:text-sm text-white hover:text-pixel-secondary transition-colors flex items-center gap-2 drop-shadow-[2px_2px_0_#000]">
-                    <i class="fa-solid fa-gamepad text-pixel-secondary"></i>
-                    ADRIANE
-                </a>
+  <!-- 2x2 TILED MAIN LAYOUT FOR PC (STACKS ON MOBILE) -->
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-6 font-pixel text-xs drop-shadow-[2px_2px_0_#000]">
-                    <a href="#hero" class="text-white hover:text-pixel-secondary transition-colors">Start</a>
-                    <a href="#about" class="text-white hover:text-pixel-secondary transition-colors">Stats</a>
-                    <a href="#created-games" class="text-white hover:text-pixel-secondary transition-colors">My Game</a>
-                    <a href="#favorite-games" class="text-white hover:text-pixel-primary transition-colors">Favorites</a>
-                    <a href="#contact" class="text-white hover:text-pixel-accent transition-colors">Socials</a>
-                </div>
+    <!-- TILE 1: UPPER LEFT - HERO & NES JASON -->
+    <section id="hero" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
+      <div>
+        <div class="inline-block bg-[#000] text-[#00f0f0] border-2 border-black px-2 py-1 mb-4">
+          <span class="pixel-font text-xs">COUNSELOR READY</span>
+        </div>
+        <h1 class="pixel-font text-lg sm:text-2xl text-black mb-4 leading-snug">
+          GREETINGS FROM CAMP CRYSTAL LAKE!<br>
+          I'M ADRIANE.
+        </h1>
+        <div class="bg-[#f8d878] border-4 border-black p-4 mb-6 shadow-[4px_4px_0_0_#000]">
+          <p class="text-lg font-bold">
+            Indie PSP Game Developer &amp; Retro Horror Enthusiast.
+          </p>
+        </div>
+      </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-white hover:text-pixel-secondary focus:outline-none drop-shadow-[2px_2px_0_#000]">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
+      <!-- NES JASON ANIMATED GIF DISPLAY -->
+      <div class="my-4 text-center">
+        <div class="relative inline-block bg-black border-4 border-black p-1 shadow-[4px_4px_0_0_#000] max-w-[280px]">
+          <img 
+            src="f13.gif" 
+            alt="Friday the 13th NES Jason" 
+            class="w-full h-auto block object-cover"
+            style="image-rendering: pixelated;"
+          >
+        </div>
+      </div>
+
+      <a href="#created-game" class="pixel-btn block w-full py-3 bg-[#e60012] text-white text-center pixel-font text-xs uppercase mt-2">
+        🎮 VIEW CREATED GAME
+      </a>
+    </section>
+
+    <!-- TILE 2: UPPER RIGHT - PLAYER STATS & INVENTORY -->
+    <section id="stats" class="pixel-box p-6 bg-[#d89654] flex flex-col justify-between">
+      <div>
+        <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2">
+          <span>⭐</span> PLAYER STATS
+        </h2>
+        <div class="bg-[#f8f8f8] border-4 border-black p-4 mb-6 text-lg">
+          <p class="mb-3">
+            Hello! I'm Adriane, an independent game developer creating games for the PSP. I love exploring game creation and bringing new retro ideas to life.
+          </p>
+          <p>
+            Big retro gaming &amp; horror movie fan (Friday the 13th, Halloween, Chucky, Scream). Conquered classics like Friday the 13th (NES), Super Mario (NES), and Naruto Ultimate Ninja Impact (PSP)!
+          </p>
+        </div>
+
+        <!-- BADGES INVENTORY -->
+        <div>
+          <span class="pixel-font text-xs uppercase block mb-2 text-[#000]">INVENTORY</span>
+          <div class="grid grid-cols-2 gap-3 text-sm font-bold">
+            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
+              <span>&lt;/&gt;</span> PSP Dev
             </div>
+            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
+              <span>👻</span> Horror Fan
+            </div>
+            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
+              <span>🕹️</span> Retro Gamer
+            </div>
+            <div class="bg-[#282828] text-white p-3 border-2 border-black flex items-center gap-2">
+              <span>🧩</span> Explorer
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TILE 3: LOWER LEFT - CREATED GAME (ANOMALY: PORTABLE) -->
+    <section id="created-game" class="pixel-box p-6 bg-[#d89654]">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="pixel-font text-lg text-black flex items-center gap-2">
+          <span>🚀</span> MY CREATED GAME
+        </h2>
+        <span class="bg-[#e60012] text-white text-[10px] pixel-font px-2 py-1 border-2 border-black">PSP PROJECT</span>
+      </div>
+
+      <!-- ANOMALY: PORTABLE SHOWCASE IMAGE -->
+      <div class="w-full bg-black border-4 border-black mb-4 overflow-hidden">
+        <img 
+          src="anomaly.png" 
+          alt="Anomaly: Portable Gameplay" 
+          class="w-full h-auto object-cover block"
+          style="image-rendering: pixelated;"
+        >
+      </div>
+
+      <h3 class="pixel-font text-base text-black mb-2">Anomaly: Portable</h3>
+      <p class="text-lg bg-[#f8f8f8] border-4 border-black p-3 mb-3">
+        A horror alien space shooter similar to <em>Dead Space</em> on Xbox 360, built natively for the PlayStation Portable (PSP).
+      </p>
+      <div class="flex flex-wrap gap-2 text-xs font-bold">
+        <span class="bg-[#000] text-white px-2 py-1 border-2 border-black">PSP Native</span>
+        <span class="bg-[#000] text-[#00f0f0] px-2 py-1 border-2 border-black">Horror</span>
+        <span class="bg-[#000] text-[#f8d878] px-2 py-1 border-2 border-black">Sci-Fi Shooter</span>
+      </div>
+    </section>
+
+    <!-- TILE 4: LOWER RIGHT - FAVORITE GAMES -->
+    <section id="favorites" class="pixel-box p-6 bg-[#d89654]">
+      <h2 class="pixel-font text-lg text-black mb-4 flex items-center gap-2">
+        <span>👾</span> GAMES I LOVE
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- SILENT HILL ORIGINS IMAGE -->
+        <div class="bg-[#f8f8f8] border-4 border-black p-2">
+          <div class="w-full h-28 bg-black border-2 border-black overflow-hidden mb-2">
+            <img src="sh-origin.jpg" alt="Silent Hill Origins PSP" class="w-full h-full object-cover block">
+          </div>
+          <h4 class="pixel-font text-xs text-black mb-1">Silent Hill Origins</h4>
+          <p class="text-xs">Favorite PSP survival horror game.</p>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-pixel-panel border-t-4 border-black absolute w-full font-pixel text-xs shadow-xl">
-            <a href="#hero" class="block py-4 px-4 text-white hover:bg-black/20 hover:text-pixel-secondary">Start</a>
-            <a href="#about" class="block py-4 px-4 text-white hover:bg-black/20 hover:text-pixel-primary">Stats</a>
-            <a href="#created-games" class="block py-4 px-4 text-white hover:bg-black/20 hover:text-pixel-secondary">My Game</a>
-            <a href="#favorite-games" class="block py-4 px-4 text-white hover:bg-black/20 hover:text-pixel-primary">Favorites</a>
-            <a href="#contact" class="block py-4 px-4 text-white hover:bg-black/20 hover:text-pixel-accent">Socials</a>
+        <!-- FRIDAY THE 13TH NES -->
+        <div class="bg-[#f8f8f8] border-4 border-black p-2">
+          <div class="w-full h-28 bg-[#008000] border-2 border-black flex items-center justify-center mb-2">
+            <span class="text-3xl">💀</span>
+          </div>
+          <h4 class="pixel-font text-xs text-black mb-1">Friday the 13th</h4>
+          <p class="text-xs">Classic NES Crystal Lake survival.</p>
         </div>
-    </nav>
 
-    <!-- Main Container: 2x2 Grid on PC/Desktop (lg:grid-cols-2), Vertical Stack on Mobile -->
-    <main class="pt-24 pb-12 clouds-bg min-h-screen px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            
-            <!-- TILE 1: UPPER LEFT - HERO & WELCOME -->
-            <section id="hero" class="pixel-border p-6 md:p-8 bg-pixel-panel flex flex-col justify-between shadow-[8px_8px_0_#000] relative">
-                <div class="space-y-4">
-                    <div class="inline-block bg-pixel-primary text-white border-2 border-black font-pixel text-[10px] px-3 py-1 shadow-[4px_4px_0_#000]">
-                        COUNSELOR READY
-                    </div>
-                    <h1 class="font-pixel text-xl md:text-3xl leading-tight text-white drop-shadow-[4px_4px_0_#000]">
-                        GREETINGS FROM<br>
-                        <span class="text-pixel-secondary">CAMP CRYSTAL LAKE!</span><br>
-                        I'M ADRIANE.
-                    </h1>
-                    
-                    <div class="q-block p-4 text-lg md:text-2xl shadow-[6px_6px_0_#000]">
-                        <p class="font-terminal font-bold" id="typewriter-text">
-                            <!-- Text injected via JS -->
-                            <span class="cursor"></span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Friday the 13th NES Jason GIF centered in Tile 1 -->
-                <div class="flex justify-center items-center my-6 md:my-8">
-                    <div class="pixel-border p-2 bg-black inline-block shadow-[6px_6px_0_#000]">
-                        <img src="3ag9kz.jpg" alt="Friday the 13th NES Jason Voorhees" class="h-44 md:h-52 object-contain border-2 border-black" style="image-rendering: pixelated;" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-6 text-center\'><i class=\'fa-solid fa-mask text-5xl text-pixel-secondary mb-2\'></i><p class=\'font-pixel text-xs text-white\'>NES JASON</p></div>';">
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <a href="#created-games" class="pixel-btn w-full text-center">
-                        <i class="fa-solid fa-gamepad mr-2"></i> VIEW GAMES
-                    </a>
-                </div>
-            </section>
-
-            <!-- TILE 2: UPPER RIGHT - PLAYER STATS & CAMP REGISTER -->
-            <section id="about" class="pixel-border p-6 md:p-8 bg-pixel-panel flex flex-col justify-between shadow-[8px_8px_0_#000]">
-                <div class="space-y-6">
-                    <h2 class="font-pixel text-lg md:text-2xl text-white drop-shadow-[4px_4px_0_#000] border-b-4 border-black pb-3">
-                        <i class="fa-solid fa-star text-pixel-secondary mr-2"></i>PLAYER STATS
-                    </h2>
-
-                    <div class="bg-black/30 p-4 border-2 border-black/50 text-white shadow-inner">
-                        <p class="font-terminal text-lg md:text-xl leading-relaxed mb-3">
-                            Hello! I'm Adriane, an independent game developer creating games for the PSP. I love exploring game creation and bringing new retro ideas to life.
-                        </p>
-                        <p class="font-terminal text-lg md:text-xl leading-relaxed">
-                            Big retro gaming & horror movie fan (Friday the 13th, Halloween, Chucky, Scream). Conquered classics like Friday the 13th (NES), Super Mario (NES), and Naruto Ultimate Ninja Impact (PSP)!
-                        </p>
-                    </div>
-
-                    <!-- Inventory Badges -->
-                    <div class="space-y-2">
-                        <h3 class="font-pixel text-xs text-pixel-secondary drop-shadow-[1px_1px_0_#000]">INVENTORY</h3>
-                        <div class="grid grid-cols-2 gap-2 font-terminal text-base md:text-lg bg-black/30 p-3 border-2 border-black/50 text-white">
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-code text-pixel-secondary"></i> PSP Dev</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-ghost text-pixel-primary"></i> Horror Fan</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-gamepad text-pixel-secondary"></i> Retro Gamer</div>
-                            <div class="flex items-center gap-2"><i class="fa-solid fa-compass text-pixel-primary"></i> Explorer</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Camp Register Logbook -->
-                <div class="mt-6 pixel-border p-4 bg-pixel-panelLight">
-                    <div class="flex justify-between items-center mb-3 border-b-2 border-black pb-2">
-                        <h3 class="font-pixel text-xs md:text-sm text-black">
-                            <i class="fa-solid fa-users mr-1"></i>LOGBOOK
-                        </h3>
-                        <div class="font-pixel text-[9px] bg-black text-white px-2 py-1 border border-black">
-                            TOTAL: <span id="total-visitors" class="text-pixel-secondary animate-pulse">0</span>
-                        </div>
-                    </div>
-                    <div class="bg-black p-3 border-2 border-black h-36 overflow-y-auto shadow-inner" id="visitor-list-container">
-                        <ul id="visitor-list" class="space-y-1">
-                            <li class="font-terminal text-base text-white/50">Booting Crystal Lake OS...</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TILE 3: CREATED GAME (ANOMALY PORTABLE) -->
-            <section id="created-games" class="pixel-border p-6 md:p-8 bg-pixel-panel flex flex-col justify-between shadow-[8px_8px_0_#000]">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center border-b-4 border-black pb-3">
-                        <h2 class="font-pixel text-lg md:text-2xl text-white drop-shadow-[4px_4px_0_#000]">
-                            <i class="fa-solid fa-code text-pixel-secondary mr-2"></i>CREATED GAME
-                        </h2>
-                        <span class="bg-pixel-accent text-white font-pixel text-[10px] px-3 py-1 border-2 border-black shadow-[2px_2px_0_#000]">MY GAME</span>
-                    </div>
-
-                    <div class="pixel-border p-3 bg-pixel-panelLight">
-                        <div class="h-48 md:h-60 w-full bg-black flex items-center justify-center relative overflow-hidden border-2 border-black">
-                            <img src="bg.jpg" alt="Anomaly: Portable gameplay" class="object-cover w-full h-full hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center p-4\'><i class=\'fa-solid fa-shuttle-space text-5xl text-pixel-secondary mb-2\'></i><p class=\'font-pixel text-xs text-white\'>ANOMALY: PORTABLE</p></div>';">
-                        </div>
-                        <div class="mt-3">
-                            <h3 class="font-pixel text-base md:text-lg text-black mb-2">Anomaly: Portable</h3>
-                            <p class="font-terminal text-lg md:text-xl text-black font-bold leading-relaxed mb-4">
-                                A horror alien space shooter inspired by Dead Space, built natively for the PSP. Features survival combat, alien encounters, and custom homebrew performance optimization.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-black text-white font-pixel text-[9px] px-2 py-1 border border-black">PSP HOMEBREW</span>
-                                <span class="bg-pixel-primary text-white font-pixel text-[9px] px-2 py-1 border border-black">HORROR</span>
-                                <span class="bg-pixel-secondary text-black font-pixel text-[9px] px-2 py-1 border border-black">SCI-FI</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TILE 4: GAMES I LOVE MOST -->
-            <section id="favorite-games" class="pixel-border p-6 md:p-8 bg-pixel-panel flex flex-col justify-between shadow-[8px_8px_0_#000]">
-                <div class="space-y-4">
-                    <h2 class="font-pixel text-lg md:text-2xl text-white drop-shadow-[4px_4px_0_#000] border-b-4 border-black pb-3">
-                        <i class="fa-solid fa-heart text-pixel-accent mr-2"></i>GAMES I LOVE
-                    </h2>
-                    <p class="font-terminal text-lg md:text-xl text-white/90">
-                        Classics and titles that inspire my retro & horror game design:
-                    </p>
-
-                    <!-- Favorite Games Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Silent Hill Origins -->
-                        <div class="pixel-border p-2 bg-pixel-panelLight flex flex-col justify-between">
-                            <div class="h-28 w-full bg-black border border-black overflow-hidden flex items-center justify-center">
-                                <img src="839558819_1089880600418246_5719952493192641379_n.jpg" alt="Silent Hill Origins" class="object-cover w-full h-full" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center p-2\'><i class=\'fa-solid fa-ghost text-3xl text-pixel-primary\'></i></div>';">
-                            </div>
-                            <div class="mt-2">
-                                <h4 class="font-pixel text-[10px] md:text-xs text-black">Silent Hill Origins</h4>
-                                <p class="font-terminal text-sm text-black font-bold">Favorite PSP horror classic.</p>
-                            </div>
-                        </div>
-
-                        <!-- Friday the 13th NES -->
-                        <div class="pixel-border p-2 bg-pixel-panelLight flex flex-col justify-between">
-                            <div class="h-28 w-full bg-[#008800] border border-black flex flex-col items-center justify-center">
-                                <i class="fa-solid fa-skull text-3xl text-pixel-accent"></i>
-                                <span class="font-pixel text-white text-[8px] mt-1">RETRO HORROR</span>
-                            </div>
-                            <div class="mt-2">
-                                <h4 class="font-pixel text-[10px] md:text-xs text-black">Friday the 13th (NES)</h4>
-                                <p class="font-terminal text-sm text-black font-bold">Classic Crystal Lake survival.</p>
-                            </div>
-                        </div>
-
-                        <!-- Naruto Ultimate Ninja Impact -->
-                        <div class="pixel-border p-2 bg-pixel-panelLight flex flex-col justify-between">
-                            <div class="h-28 w-full bg-[#C84C0C] border border-black flex flex-col items-center justify-center">
-                                <i class="fa-solid fa-fire text-3xl text-pixel-secondary"></i>
-                                <span class="font-pixel text-white text-[8px] mt-1">PSP ACTION</span>
-                            </div>
-                            <div class="mt-2">
-                                <h4 class="font-pixel text-[10px] md:text-xs text-black">Naruto Impact (PSP)</h4>
-                                <p class="font-terminal text-sm text-black font-bold">Favorite action hack & slash.</p>
-                            </div>
-                        </div>
-
-                        <!-- Super Mario Bros -->
-                        <div class="pixel-border p-2 bg-pixel-panelLight flex flex-col justify-between">
-                            <div class="h-28 w-full bg-[#5C94FC] border border-black flex flex-col items-center justify-center">
-                                <i class="fa-solid fa-gamepad text-3xl text-pixel-accent"></i>
-                                <span class="font-pixel text-white text-[8px] mt-1">RETRO CLASSIC</span>
-                            </div>
-                            <div class="mt-2">
-                                <h4 class="font-pixel text-[10px] md:text-xs text-black">Super Mario (NES)</h4>
-                                <p class="font-terminal text-sm text-black font-bold">Legendary platformer.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TILE 5: SOCIAL MEDIA ACCOUNTS & WARP ZONE -->
-            <section id="contact" class="pixel-border p-6 md:p-8 bg-[#008800] lg:col-span-2 flex flex-col justify-between shadow-[8px_8px_0_#000]">
-                <div class="space-y-6">
-                    <h2 class="font-pixel text-lg md:text-2xl text-white drop-shadow-[4px_4px_0_#000] border-b-4 border-black pb-3">
-                        <i class="fa-solid fa-share-nodes text-pixel-secondary mr-2"></i>WARP ZONE & SOCIAL MEDIA
-                    </h2>
-                    
-                    <p class="font-terminal text-xl md:text-2xl text-white drop-shadow-[2px_2px_0_#000]">
-                        Follow my dev logs, join discussions, or get in touch regarding PSP indie game development!
-                    </p>
-
-                    <!-- Links List Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <a href="https://www.youtube.com/@TheCoalNoob" target="_blank" rel="noopener noreferrer" class="pixel-btn pixel-btn-youtube w-full text-center py-4 text-sm md:text-base">
-                            <i class="fa-brands fa-youtube text-xl mr-2"></i> YOUTUBE CHANNEL
-                        </a>
-
-                        <a href="https://www.reddit.com/user/According-Rain4858" target="_blank" rel="noopener noreferrer" class="pixel-btn pixel-btn-reddit w-full text-center py-4 text-sm md:text-base">
-                            <i class="fa-brands fa-reddit text-xl mr-2"></i> REDDIT PROFILE
-                        </a>
-
-                        <a href="mailto:contact@example.com" class="pixel-btn pixel-btn-email w-full text-center py-4 text-sm md:text-base">
-                            <i class="fa-solid fa-envelope text-xl mr-2"></i> EMAIL ME
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Paypal Donation Coin Block -->
-                <div class="mt-8 bg-[#FBD000] p-4 text-center border-4 border-black shadow-[6px_6px_0_#000]">
-                    <p class="font-terminal text-xl text-black font-bold">
-                        <i class="fa-solid fa-coins text-[#C84C0C] mr-2"></i>
-                        <a href="https://paypal.me/" target="_blank" class="hover:text-[#E52521] underline decoration-4 decoration-[#E52521]">
-                            DONATE COINS VIA PAYPAL TO SUPPORT DEVELOPMENT
-                        </a>
-                    </p>
-                </div>
-            </section>
-
+        <!-- NARUTO ULTIMATE NINJA IMPACT -->
+        <div class="bg-[#f8f8f8] border-4 border-black p-2">
+          <div class="w-full h-28 bg-[#e60012] border-2 border-black flex items-center justify-center mb-2">
+            <span class="text-3xl">🍥</span>
+          </div>
+          <h4 class="pixel-font text-xs text-black mb-1">Naruto Impact</h4>
+          <p class="text-xs">Favorite PSP action title.</p>
         </div>
-    </main>
 
-    <footer class="py-8 bg-black text-center font-terminal text-xl text-white relative z-10 border-t-4 border-pixel-panel">
-        <p>© <span id="year"></span> ADRIANE. ALL RIGHTS RESERVED.</p>
-        <p class="text-sm mt-2 text-pixel-secondary">PRESS START TO PLAY</p>
-    </footer>
+        <!-- SUPER MARIO BROS NES -->
+        <div class="bg-[#f8f8f8] border-4 border-black p-2">
+          <div class="w-full h-28 bg-[#5c94fc] border-2 border-black flex items-center justify-center mb-2">
+            <span class="text-3xl">🍄</span>
+          </div>
+          <h4 class="pixel-font text-xs text-black mb-1">Super Mario Bros</h4>
+          <p class="text-xs">Completed NES classic.</p>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // Set Current Year
-        document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- FULL WIDTH BOTTOM TILE: WARP ZONE & SOCIAL MEDIA -->
+    <section id="socials" class="lg:col-span-2 pixel-box p-6 bg-[#d89654]">
+      <h2 class="pixel-font text-lg text-black mb-4 text-center">
+        <span>🌐</span> WARP ZONE &amp; CONTACT
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- YOUTUBE -->
+        <a href="https://www.youtube.com/@TheCoalNoob" target="_blank" class="pixel-btn bg-[#e60012] text-white p-3 text-center block">
+          <div class="text-xl mb-1">▶️</div>
+          <span class="pixel-font text-xs uppercase">YouTube</span>
+        </a>
 
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        <!-- REDDIT -->
+        <a href="https://www.reddit.com/user/According-Rain4858" target="_blank" class="pixel-btn bg-[#ff4500] text-white p-3 text-center block">
+          <div class="text-xl mb-1">🤖</div>
+          <span class="pixel-font text-xs uppercase">Reddit</span>
+        </a>
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        <!-- EMAIL -->
+        <a href="mailto:your-email@example.com" class="pixel-btn bg-[#00f0f0] text-black p-3 text-center block">
+          <div class="text-xl mb-1">✉️</div>
+          <span class="pixel-font text-xs uppercase">Email</span>
+        </a>
 
-        // Close mobile menu on link click
-        menu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-            });
-        });
+        <!-- PAYPAL -->
+        <a href="https://paypal.me" target="_blank" class="pixel-btn bg-[#f8d878] text-black p-3 text-center block">
+          <div class="text-xl mb-1">🪙</div>
+          <span class="pixel-font text-xs uppercase">Donate</span>
+        </a>
+      </div>
+    </section>
 
-        // Typewriter Effect
-        const textToType = "Indie PSP Game Developer & Retro Horror Enthusiast.";
-        const typewriterElement = document.getElementById('typewriter-text');
-        const cursor = '<span class="cursor"></span>';
-        let i = 0;
-        let isTyping = true;
+  </main>
 
-        function typeWriter() {
-            if (i < textToType.length) {
-                // Keep the cursor at the end while typing
-                typewriterElement.innerHTML = textToType.substring(0, i + 1) + cursor;
-                i++;
-                // Faster typing speed for snappy feel
-                let speed = Math.random() * 30 + 30; 
-                setTimeout(typeWriter, speed);
-            }
-        }
+  <footer class="max-w-7xl mx-auto mt-6 text-center text-xs pixel-font text-black py-4">
+    © GAME OVER — ALL RIGHTS RESERVED
+  </footer>
 
-        // Start typing effect shortly after page load
-        setTimeout(typeWriter, 800);
-        
-        // Smooth scrolling for anchor links to handle sticky header offset
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    const headerOffset = 80;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const modal = document.getElementById('welcome-modal');
-        const nameInput = document.getElementById('visitor-name');
-        const submitBtn = document.getElementById('submit-name');
-        const errorMsg = document.getElementById('name-error');
-
-        let db, auth, user;
-
-        async function initFirebase() {
-            try {
-                if (typeof __firebase_config === 'undefined') {
-                    console.log("Local mode: Realtime tracking requires server environment.");
-                    document.getElementById('visitor-list').innerHTML = '<li class="font-terminal text-lg text-white/50">Database offline. Ready for local entries.</li>';
-                    return;
-                }
-                
-                const firebaseConfig = JSON.parse(__firebase_config);
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                // Authenticate before interacting with Firestore
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                user = auth.currentUser;
-
-                setupRealtimeListener();
-            } catch(e) {
-                console.error("Database init failed:", e);
-                document.getElementById('visitor-list').innerHTML = '<li class="font-terminal text-lg text-pixel-primary">Connection to Camp Mainframe lost.</li>';
-            }
-        }
-
-        function setupRealtimeListener() {
-            if (!user || !db) return;
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'adriane-portfolio';
-            const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-
-            onSnapshot(visitorsRef, (snapshot) => {
-                const visitors = [];
-                snapshot.forEach(doc => visitors.push(doc.data()));
-
-                // Sort in memory by timestamp (newest first) to avoid complex queries
-                visitors.sort((a, b) => b.timestamp - a.timestamp);
-
-                document.getElementById('total-visitors').textContent = visitors.length;
-
-                const list = document.getElementById('visitor-list');
-                list.innerHTML = '';
-                
-                if (visitors.length === 0) {
-                    list.innerHTML = '<li class="font-terminal text-xl text-white/50">No counselors have signed in yet...</li>';
-                    return;
-                }
-
-                visitors.forEach(v => {
-                    const li = document.createElement('li');
-                    li.className = 'font-terminal text-xl text-white border-b border-white/10 pb-1 break-words';
-                    
-                    let timeStr = "";
-                    if (v.timestamp) {
-                        const d = new Date(v.timestamp);
-                        timeStr = `<span class="text-pixel-secondary text-sm mr-2">[${d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}]</span>`;
-                    }
-
-                    li.innerHTML = `${timeStr}> ${v.name}`;
-                    list.appendChild(li);
-                });
-            }, (err) => {
-                console.error("Logbook sync error:", err);
-            });
-        }
-
-        submitBtn.addEventListener('click', async () => {
-            const name = nameInput.value.trim();
-            if (!name) {
-                errorMsg.classList.remove('hidden');
-                // Shake animation for error
-                nameInput.classList.add('translate-x-2');
-                setTimeout(() => nameInput.classList.remove('translate-x-2'), 100);
-                return;
-            }
-            
-            errorMsg.classList.add('hidden');
-            modal.style.opacity = '0'; 
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300);
-
-            // Save to Firebase
-            if (user && db) {
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'adriane-portfolio';
-                try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'visitors'), {
-                        name: name,
-                        timestamp: Date.now()
-                    });
-                } catch (e) {
-                    console.error("Error signing logbook:", e);
-                }
-            } else {
-                // Local UI fallback if disconnected
-                const list = document.getElementById('visitor-list');
-                if(list.innerText.includes('offline') || list.innerText.includes('lost') || list.innerText.includes('No counselors')) list.innerHTML = '';
-                
-                const li = document.createElement('li');
-                li.className = 'font-terminal text-xl text-pixel-secondary border-b border-white/10 pb-1';
-                const d = new Date();
-                const timeStr = `<span class="text-pixel-secondary text-sm mr-2">[${d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}]</span>`;
-                li.innerHTML = `${timeStr}> ${name} (You)`;
-                list.prepend(li);
-                
-                const countEl = document.getElementById('total-visitors');
-                countEl.textContent = parseInt(countEl.textContent) + 1;
-            }
-        });
-
-        // Submit via Enter key
-        nameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                submitBtn.click();
-            }
-        });
-
-        initFirebase();
-    </script>
 </body>
 </html>
